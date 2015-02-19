@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-403c0dbb746d464b37b5cd1d147f2354a96b0c3d.jar" />
+    </item>
+    <item
+        jar="/usr/local/lib/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-84dc31253d9e8c529496736295f37acb5d747ff2.jar" />
+    </item>
+    <item
+        jar="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/pre-dexed/debug/classes-cd3fac5375947e965e4c743a84f54b650b2b975d.jar" />
+    </item>
+    <item
+        jar="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/pre-dexed/debug/classes-431e6c02990375040db98656a7d082d8e50f9228.jar" />
+    </item>
+    <item
+        jar="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/pre-dexed/debug/classes-6d6edf5424f28feb575299780e167ccbc771e340.jar" />
+    </item>
+    <item
+        jar="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="/home/luis/AndroidStudioProjects/Iglesia/app/build/intermediates/pre-dexed/debug/classes-28e37f4c867dc9a2fc2fbc1714bf362a9d4ef0b1.jar" />
+    </item>
+
+</items>
