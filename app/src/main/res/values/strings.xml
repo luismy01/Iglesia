@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Iglesia</string>
+    <string name="hello_world">Hola mundo!</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_new">Nuevo</string>
+    <string name="action_save">Guardar</string>
+    <string name="title_activity_asistencia_item">Nueva Asistencia</string>
+
+    <string name="dialog_save">Guardar</string>
+    <string name="dialog_cancel">Cancelar</string>
+
+</resources>

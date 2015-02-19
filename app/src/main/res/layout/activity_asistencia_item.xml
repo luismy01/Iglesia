@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:rowCount="1"
+    android:columnCount="2"
+    android:weightSum="1"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/date_asistencia"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.06"
+        android:hint="¿cuando fué?" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/num_hermanos"
+        android:layout_weight="0.06"
+        android:hint="¿Cuantos Hermanos?" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/num_visitas"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.06"
+        android:hint="¿Cuantas visitas?" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/num_adolescentes"
+        android:layout_weight="0.06"
+        android:hint="¿Cuantos Adolescentes?" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/num_ninos"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.06"
+        android:hint="¿Cuantos niños?" />
+
+</LinearLayout>
