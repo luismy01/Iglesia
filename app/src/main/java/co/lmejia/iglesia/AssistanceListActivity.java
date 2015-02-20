@@ -1,5 +1,6 @@
 package co.lmejia.iglesia;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
@@ -86,12 +87,13 @@ public class AssistanceListActivity extends ActionBarActivity
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        saveAssistance(dialog.getView());
+
+        AlertDialog alertDialog = (AlertDialog) dialog.getDialog();
+        saveAssistance(alertDialog);
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-
     }
 
     public void ShowAssistanceDialog() {
@@ -100,12 +102,12 @@ public class AssistanceListActivity extends ActionBarActivity
         dialog.show(this.getSupportFragmentManager(), "Asistencia");
     }
 
-    private boolean saveAssistance(View view) {
+    private boolean saveAssistance(AlertDialog dialog) {
 
-        int h = Integer.parseInt(((TextView) view.findViewById(R.id.num_hermanos)).getText().toString());
-        int v = Integer.parseInt(((TextView) view.findViewById(R.id.num_visitas)).getText().toString());
-        int a = Integer.parseInt(((TextView) view.findViewById(R.id.num_adolescentes)).getText().toString());
-        int n = Integer.parseInt(((TextView) view.findViewById(R.id.num_ninos)).getText().toString());
+        int h = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_hermanos)).getText().toString());
+        int v = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_visitas)).getText().toString());
+        int a = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_adolescentes)).getText().toString());
+        int n = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_ninos)).getText().toString());
 
         Assistance assistance = new Assistance(new Date(), h, v, a, n, 0);
         assistance.id = helper.save(assistance);

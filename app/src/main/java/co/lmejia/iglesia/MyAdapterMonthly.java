@@ -53,16 +53,16 @@ public class MyAdapterMonthly extends RecyclerView.Adapter<MyAdapterMonthly.Card
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
 
-        Assistance assitance = assistances.get(position);
+        Assistance assistance = assistances.get(position);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(assitance.fecha);
+        calendar.setTime(assistance.fecha);
 
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        holder.txtAssistance.setText("560");
+        holder.txtAssistance.setText( String.valueOf(assistance.getTotal()) );
         holder.txtMonth.setText(MyData.getMonthName(month));
         holder.txtDayYear.setText("" + day + ", " + year);
 

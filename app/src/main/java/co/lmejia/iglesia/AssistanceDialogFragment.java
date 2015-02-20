@@ -33,6 +33,7 @@ public class AssistanceDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 
+        builder.setTitle("Asistencia");
         builder.setView(xmlLayout);
 
         builder.setPositiveButton(R.string.dialog_save, new DialogInterface.OnClickListener() {
