@@ -56,7 +56,7 @@ public class MyAdapterMonthly extends RecyclerView.Adapter<MyAdapterMonthly.Card
         Assistance assistance = assistances.get(position);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(assistance.fecha);
+        calendar.setTime(assistance.getFecha());
 
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);

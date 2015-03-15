@@ -11,4 +11,14 @@
     <string name="dialog_save">Guardar</string>
     <string name="dialog_cancel">Cancelar</string>
 
+    <string name="txt_total">555</string>
+    <string name="txt_month">Enero</string>
+    <string name="txt_day">23, 2015</string>
+
+    <string name="assistance_when_date">¿Cuando fué?</string>
+    <string name="assistance_how_many_brothers">¿Cuantos hermanos?</string>
+    <string name="assistance_how_many_visits">¿Cuantas vistas?</string>
+    <string name="assistance_how_many_teenagers">¿Cuantos adolescentes?</string>
+    <string name="assistance_how_many_kids">¿Cuantos niños?</string>
+
 </resources>

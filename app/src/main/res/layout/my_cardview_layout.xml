@@ -1,71 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:divider="@drawable/separator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/list_tile_height"
     android:orientation="vertical"
+    android:showDividers="middle"
     android:tag="cards main container">
 
-<!--
-    <android.support.v7.widget.CardView
+    <!--<android.support.v7.widget.CardView
         android:id="@+id/my_card_view"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardBackgroundColor="@color/my_card_view_background"
         card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="5dp">
--->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        card_view:cardElevation="5dp">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text=" 5 5 5 "
-                android:id="@+id/txtAssistance"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:background="#ff53abff"
-                android:gravity="center_vertical"
-                android:importantForAccessibility="no"
-                android:textStyle="bold"
-                android:layout_marginLeft="4dp"
-                android:padding="20dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Enero"
-                android:id="@+id/txtMonth"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentEnd="false"
-                android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@+id/txtAssistance"
-                android:gravity="center_horizontal"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/txt_total"
+                    android:id="@+id/txtAssistance"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/avatar"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:importantForAccessibility="no"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/list_text_primary_size"
+                    android:layout_marginLeft="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="23, 2015"
-                android:id="@+id/txtDayYear"
-                android:layout_below="@+id/txtMonth"
-                android:layout_toRightOf="@+id/txtAssistance"
-                android:layout_toEndOf="@+id/txtAssistance"
-                android:textStyle="italic"
-                android:layout_marginLeft="50dp"
-                android:layout_marginBottom="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/txt_month"
+                    android:id="@+id/txtMonth"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentLeft="false"
+                    android:paddingLeft="@dimen/list_text_padding_left"
+                    android:paddingTop="@dimen/list_text_padding_top"
+                    android:paddingRight="@dimen/list_text_padding_right"
+                    android:textSize="@dimen/list_text_primary_size"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_alignLeft="@+id/txtAssistance" />
 
-        </RelativeLayout>
-<!--
-    </android.support.v7.widget.CardView>
--->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/txt_day"
+                    android:id="@+id/txtDayYear"
+                    android:layout_below="@+id/txtMonth"
+                    android:textStyle="italic"
+                    android:paddingLeft="@dimen/list_text_padding_left"
+                    android:layout_alignParentLeft="false"
+                    android:paddingBottom="@dimen/list_text_padding_bottom"
+                    android:paddingRight="@dimen/list_text_padding_right"
+                    android:textSize="@dimen/list_text_secondary_size"
+                    android:layout_alignLeft="@+id/txtAssistance" />
+
+            </RelativeLayout>
+
+    <!--</android.support.v7.widget.CardView>-->
+
 </LinearLayout>

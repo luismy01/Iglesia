@@ -50,27 +50,27 @@ public class AssistanceActivity extends ActionBarActivity {
         EditText txt;
 
 
-        txt = (EditText) findViewById(R.id.date_asistencia);
-        values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_FECHA, txt.getText().toString());
+        //txt = (EditText) findViewById(R.id.date_asistencia);
+        //values.put(AssistanceContract.Assistance.KEY_FECHA, txt.getText().toString());
 
         txt = (EditText) findViewById(R.id.num_hermanos);
-        values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_HERMANOS, Integer.parseInt(txt.getText().toString()));
+        values.put(AssistanceContract.Assistance.KEY_HERMANOS, Integer.parseInt(txt.getText().toString()));
 
         txt = (EditText) findViewById(R.id.num_visitas);
-        values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_VISITAS, Integer.parseInt(txt.getText().toString()));
+        values.put(AssistanceContract.Assistance.KEY_VISITAS, Integer.parseInt(txt.getText().toString()));
 
         txt = (EditText) findViewById(R.id.num_adolescentes);
-        values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_ADOLESCENTES, Integer.parseInt(txt.getText().toString()));
+        values.put(AssistanceContract.Assistance.KEY_ADOLESCENTES, Integer.parseInt(txt.getText().toString()));
 
         txt = (EditText) findViewById(R.id.num_ninos);
-        values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_NINOS, Integer.parseInt(txt.getText().toString()));
+        values.put(AssistanceContract.Assistance.KEY_NINOS, Integer.parseInt(txt.getText().toString()));
 
-        values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_OBSERVACIONES, "");
+        values.put(AssistanceContract.Assistance.KEY_OBSERVACIONES, "");
 
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
-        newRowId = db.insert(AssistanceContract.AsistenciaEntry.TABLE_NAME, "null", values);
+        newRowId = db.insert(AssistanceContract.Assistance.TABLE_NAME, "null", values);
 
         db = null;
         helper = null;

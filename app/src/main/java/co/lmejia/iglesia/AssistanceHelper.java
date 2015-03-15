@@ -2,8 +2,13 @@ package co.lmejia.iglesia;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by luis on 1/25/15.
@@ -16,12 +21,12 @@ public class AssistanceHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(AssistanceContract.AsistenciaEntry.SQL_CREATE_TABLE);
+        db.execSQL(AssistanceContract.Assistance.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(AssistanceContract.AsistenciaEntry.SQL_DELETE_TABLE);
+        db.execSQL(AssistanceContract.Assistance.SQL_DELETE_TABLE);
         onCreate(db);
     }
 
@@ -31,32 +36,144 @@ public class AssistanceHelper extends SQLiteOpenHelper {
 
     public long save(Assistance assistance) {
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
         long newId = 0;
 
-        if (assistance.id == 0) {
-
-            values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_FECHA, assistance.fecha.getTime());
-            values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_HERMANOS, assistance.hermanos);
-            values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_VISITAS, assistance.visitas);
-            values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_ADOLESCENTES, assistance.adolescentes);
-            values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_NINOS, assistance.ninos);
-            values.put(AssistanceContract.AsistenciaEntry.COLUMN_NAME_OBSERVACIONES, "");
-
-            newId = db.insert(AssistanceContract.AsistenciaEntry.TABLE_NAME, "null", values);
-
+        if (assistance.getId() == 0) {
+            newId = createAssistance(assistance);
         } else {
-
-            String selection = AssistanceContract.AsistenciaEntry._ID + " LIKE ?";
-            String[] selectionArgs = { String.valueOf(assistance.id) };
-
-            db.update(AssistanceContract.AsistenciaEntry.TABLE_NAME, values, selection, selectionArgs);
-
+            updateAssistance(assistance);
+            newId = assistance.getId();
         }
-
-        db = null;
 
         return newId;
     }
+
+    public long createAssistance(Assistance assistance) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(AssistanceContract.Assistance.KEY_FECHA, assistance.getFecha().getTime());
+        values.put(AssistanceContract.Assistance.KEY_HERMANOS, assistance.getHermanos());
+        values.put(AssistanceContract.Assistance.KEY_VISITAS, assistance.getVisitas());
+        values.put(AssistanceContract.Assistance.KEY_ADOLESCENTES, assistance.getAdolescentes());
+        values.put(AssistanceContract.Assistance.KEY_NINOS, assistance.getNinos());
+        values.put(AssistanceContract.Assistance.KEY_OBSERVACIONES, "");
+
+        long newId = db.insert(AssistanceContract.Assistance.TABLE_NAME, "null", values);
+        db.close();
+
+        return newId;
+    }
+
+    public boolean updateAssistance(Assistance assistance) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(AssistanceContract.Assistance.KEY_FECHA, assistance.getFecha().getTime());
+        values.put(AssistanceContract.Assistance.KEY_HERMANOS, assistance.getHermanos());
+        values.put(AssistanceContract.Assistance.KEY_VISITAS, assistance.getVisitas());
+        values.put(AssistanceContract.Assistance.KEY_ADOLESCENTES, assistance.getAdolescentes());
+        values.put(AssistanceContract.Assistance.KEY_NINOS, assistance.getNinos());
+        values.put(AssistanceContract.Assistance.KEY_OBSERVACIONES, "");
+
+        String selection = AssistanceContract.Assistance._ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(assistance.getId()) };
+
+        db.update(AssistanceContract.Assistance.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+
+        return true;
+    }
+
+    public boolean deleteAssistance(Assistance assistance) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String selection = AssistanceContract.Assistance._ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(assistance.getId()) };
+
+        db.delete(AssistanceContract.Assistance.TABLE_NAME, selection, selectionArgs);
+        db.close();
+
+        return true;
+    }
+
+    public Assistance getAssistance(long id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        Assistance assistance = new Assistance();
+
+        String columns[] = { AssistanceContract.Assistance.KEY_FECHA
+            , AssistanceContract.Assistance.KEY_HERMANOS
+            , AssistanceContract.Assistance.KEY_VISITAS
+            , AssistanceContract.Assistance.KEY_ADOLESCENTES
+            , AssistanceContract.Assistance.KEY_NINOS
+            , AssistanceContract.Assistance.KEY_OBSERVACIONES};
+
+        String selection = AssistanceContract.Assistance._ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf( id ) };
+
+        Cursor cursor = db.query(AssistanceContract.Assistance.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+
+        if (!cursor.moveToFirst()) return null;
+
+        long f = cursor.getLong(0);
+        int h = cursor.getInt(1);
+        int v = cursor.getInt(2);
+        int a = cursor.getInt(3);
+        int n = cursor.getInt(4);
+
+        assistance.setFecha( new Date(f) );
+        assistance.setHermanos(h);
+        assistance.setVisitas(v);
+        assistance.setAdolescentes(a);
+        assistance.setNinos(n);
+
+        cursor.close();
+        db.close();
+
+        return assistance;
+    }
+
+    public List<Assistance> allAssistances() {
+
+        SQLiteDatabase db = getReadableDatabase();
+        List<Assistance> assistances = new ArrayList<Assistance>();
+
+        String columns[] = { AssistanceContract.Assistance.KEY_FECHA
+                , AssistanceContract.Assistance.KEY_HERMANOS
+                , AssistanceContract.Assistance.KEY_VISITAS
+                , AssistanceContract.Assistance.KEY_ADOLESCENTES
+                , AssistanceContract.Assistance.KEY_NINOS
+                , AssistanceContract.Assistance.KEY_OBSERVACIONES};
+
+        Cursor cursor = db.query(AssistanceContract.Assistance.TABLE_NAME, columns, null, null, null, null, null);
+
+        if (!cursor.moveToFirst()) return null;
+
+        do {
+
+            long f = cursor.getLong(0);
+            int h = cursor.getInt(1);
+            int v = cursor.getInt(2);
+            int a = cursor.getInt(3);
+            int n = cursor.getInt(4);
+
+            Assistance assistance = new Assistance();
+            assistance.setFecha(new Date(f));
+            assistance.setHermanos(h);
+            assistance.setVisitas(v);
+            assistance.setAdolescentes(a);
+            assistance.setNinos(n);
+
+            assistances.add(assistance);
+
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        db.close();
+
+        return assistances;
+
+    }
+
 }

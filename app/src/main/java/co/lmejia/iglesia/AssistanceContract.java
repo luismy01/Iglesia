@@ -23,25 +23,25 @@ public final class AssistanceContract {
     public AssistanceContract() {}
 
     /* Inner class that defines the table contents */
-    public static abstract class AsistenciaEntry implements BaseColumns {
+    public static abstract class Assistance implements BaseColumns {
 
         public static final String TABLE_NAME = "asistencia";
-        public static final String COLUMN_NAME_FECHA = "fecha";
-        public static final String COLUMN_NAME_HERMANOS = "hermanos";
-        public static final String COLUMN_NAME_VISITAS = "visitas";
-        public static final String COLUMN_NAME_ADOLESCENTES = "adolescentes";
-        public static final String COLUMN_NAME_NINOS = "ninos";
-        public static final String COLUMN_NAME_OBSERVACIONES = "observaciones";
+        public static final String KEY_FECHA = "fecha";
+        public static final String KEY_HERMANOS = "hermanos";
+        public static final String KEY_VISITAS = "visitas";
+        public static final String KEY_ADOLESCENTES = "adolescentes";
+        public static final String KEY_NINOS = "ninos";
+        public static final String KEY_OBSERVACIONES = "observaciones";
 
         public static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " ("
                     + _ID + " INTEGER PRIMARY KEY"
-                    + COMMA_SEP + COLUMN_NAME_FECHA + DATE_TYPE
-                    + COMMA_SEP + COLUMN_NAME_HERMANOS + INT_TYPE
-                    + COMMA_SEP + COLUMN_NAME_VISITAS + INT_TYPE
-                    + COMMA_SEP + COLUMN_NAME_ADOLESCENTES + INT_TYPE
-                    + COMMA_SEP + COLUMN_NAME_NINOS + INT_TYPE
-                    + COMMA_SEP + COLUMN_NAME_OBSERVACIONES + TEXT_TYPE
+                    + COMMA_SEP + KEY_FECHA + DATE_TYPE
+                    + COMMA_SEP + KEY_HERMANOS + INT_TYPE
+                    + COMMA_SEP + KEY_VISITAS + INT_TYPE
+                    + COMMA_SEP + KEY_ADOLESCENTES + INT_TYPE
+                    + COMMA_SEP + KEY_NINOS + INT_TYPE
+                    + COMMA_SEP + KEY_OBSERVACIONES + TEXT_TYPE
                 + " )";
 
         public static final String SQL_DELETE_TABLE =

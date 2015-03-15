@@ -60,9 +60,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         TextView textViewVisitas = holder.textViewVisitas;
         ImageView imageView = holder.imageViewIcon;
 
-        textViewHermanos.setText("" + assistances.get(position).hermanos);
-        textViewVisitas.setText("" + assistances.get(position).visitas);
-        imageView.setImageResource(assistances.get(position).image);
+        Assistance assistance = assistances.get(position);
+
+        textViewHermanos.setText( String.valueOf(assistance.getHermanos()) );
+        textViewVisitas.setText( String.valueOf(assistance.getVisitas()) );
+        imageView.setImageResource( R.drawable.support_one );
 
     }
 

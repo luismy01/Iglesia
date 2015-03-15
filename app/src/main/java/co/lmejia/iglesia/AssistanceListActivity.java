@@ -27,29 +27,19 @@ public class AssistanceListActivity extends ActionBarActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private AssistanceHelper helper;
 
+    private AssistanceDialogFragment assistanceDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        helper = new AssistanceHelper(this);
+        helper = new AssistanceHelper(getApplicationContext());
 
         assistances = new ArrayList<Assistance>();
-
-        /*
-        for (int i = 0; i < MyData.hermanos.length; i++) {
-            assistances.add(new Assistance(new Date(),
-                    MyData.hermanos[i],
-                    MyData.visitas[i],
-                    MyData.adolescentes[i],
-                    MyData.ninos[i],
-                    R.drawable.goose
-            ));
-        }
-        */
-
         mAdapter = new MyAdapterMonthly(assistances);
+
         mLayoutManager = new LinearLayoutManager(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -57,6 +47,9 @@ public class AssistanceListActivity extends ActionBarActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        assistanceDialog = new AssistanceDialogFragment();
+        assistanceDialog.setListener(this);
 
     }
 
@@ -86,33 +79,26 @@ public class AssistanceListActivity extends ActionBarActivity
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-
-        AlertDialog alertDialog = (AlertDialog) dialog.getDialog();
-        saveAssistance(alertDialog);
+    public void onDialogPositiveClick(AssistanceDialogFragment dialog) {
+        saveAssistance(dialog.getAssistance());
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    public void onDialogNegativeClick(AssistanceDialogFragment dialog) {
+
     }
 
     public void ShowAssistanceDialog() {
-        AssistanceDialogFragment dialog = new AssistanceDialogFragment();
-        dialog.setListener(this);
-        dialog.show(this.getSupportFragmentManager(), "Asistencia");
+        assistanceDialog.reset();
+        assistanceDialog.show(this.getSupportFragmentManager(), "Asistencia");
     }
 
-    private boolean saveAssistance(AlertDialog dialog) {
+    private boolean saveAssistance(Assistance assistance) {
 
-        int h = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_hermanos)).getText().toString());
-        int v = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_visitas)).getText().toString());
-        int a = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_adolescentes)).getText().toString());
-        int n = Integer.parseInt(((TextView) dialog.findViewById(R.id.num_ninos)).getText().toString());
+        long id = helper.save(assistance);
 
-        Assistance assistance = new Assistance(new Date(), h, v, a, n, 0);
-        assistance.id = helper.save(assistance);
-
-        if (assistance.id != 0) {
+        if (id != 0) {
+            assistance.setId(id);
             assistances.add(assistance);
             mAdapter.notifyItemInserted(assistances.size()-1);
             return true;
