@@ -1,8 +1,6 @@
 package co.lmejia.iglesia;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class AssistanceListActivity extends ActionBarActivity
@@ -23,7 +19,7 @@ public class AssistanceListActivity extends ActionBarActivity
 
     private RecyclerView mRecyclerView;
     private ArrayList<Assistance> assistances;
-    private RecyclerView.Adapter mAdapter;
+    private MyAdapterMonthly mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AssistanceHelper helper;
 
@@ -53,6 +49,19 @@ public class AssistanceListActivity extends ActionBarActivity
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAdapter.getItemCount() == 0) {
+            populateList();
+        }
+
+    }
+
+    private void populateList() {
+        new RetrieveAssistanceListTask(this, mAdapter).execute();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,7 +89,11 @@ public class AssistanceListActivity extends ActionBarActivity
 
     @Override
     public void onDialogPositiveClick(AssistanceDialogFragment dialog) {
-        saveAssistance(dialog.getAssistance());
+
+        if (saveAssistance(dialog.getAssistance())) {
+            Toast.makeText(this, "Elemento insertado", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

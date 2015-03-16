@@ -14,6 +14,7 @@
     <string name="txt_total">555</string>
     <string name="txt_month">Enero</string>
     <string name="txt_day">23, 2015</string>
+    <string name="txt_loading">Cargando...</string>
 
     <string name="assistance_when_date">¿Cuando fué?</string>
     <string name="assistance_how_many_brothers">¿Cuantos hermanos?</string>

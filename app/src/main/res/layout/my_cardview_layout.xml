@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:divider="@drawable/separator"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_tile_height"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:showDividers="middle"
     android:tag="cards main container">

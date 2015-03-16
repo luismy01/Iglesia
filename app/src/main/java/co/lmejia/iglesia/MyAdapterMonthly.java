@@ -8,13 +8,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by luis on 2/14/15.
  */
 public class MyAdapterMonthly extends RecyclerView.Adapter<MyAdapterMonthly.CardViewHolder> {
 
-    private ArrayList<Assistance> assistances;
+    private List<Assistance> assistances;
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
 
@@ -31,10 +32,13 @@ public class MyAdapterMonthly extends RecyclerView.Adapter<MyAdapterMonthly.Card
     }
 
 
-    public MyAdapterMonthly(ArrayList<Assistance> dataset) {
+    public MyAdapterMonthly(List<Assistance> dataset) {
         this.assistances = dataset;
     }
 
+    public void setAssistances(List<Assistance> assistances) {
+        this.assistances = assistances;
+    }
 
     // Create new views (invoked by the layout manager)
     @Override

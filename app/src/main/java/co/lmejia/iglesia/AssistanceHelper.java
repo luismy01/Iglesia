@@ -146,7 +146,9 @@ public class AssistanceHelper extends SQLiteOpenHelper {
                 , AssistanceContract.Assistance.KEY_NINOS
                 , AssistanceContract.Assistance.KEY_OBSERVACIONES};
 
-        Cursor cursor = db.query(AssistanceContract.Assistance.TABLE_NAME, columns, null, null, null, null, null);
+        String orderBy = AssistanceContract.Assistance.KEY_FECHA + " ASC";
+
+        Cursor cursor = db.query(AssistanceContract.Assistance.TABLE_NAME, columns, null, null, null, null, orderBy);
 
         if (!cursor.moveToFirst()) return null;
 

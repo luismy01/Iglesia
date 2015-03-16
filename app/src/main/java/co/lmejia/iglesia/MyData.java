@@ -10,8 +10,8 @@ public class MyData {
     static Integer[] adolescentes = {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000};
     static Integer[] ninos = {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000};
 
-    static String[] months_name = {"Meses", "Enero", "Febrero","Marzo", "Abril", "Mayo", "Junio"
-            , "Julio", "Agosto", "Septiembre", "Obtubre", "Noviembre", "Diciembre"};
+    static String[] months_name = {"Enero", "Febrero","Marzo", "Abril", "Mayo", "Junio"
+            , "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 
     static String getMonthName (int month) {
         return months_name[month];
