@@ -98,7 +98,6 @@ public class AssistanceListActivity extends ActionBarActivity
 
     @Override
     public void onDialogNegativeClick(AssistanceDialogFragment dialog) {
-
     }
 
     public void ShowAssistanceDialog() {
