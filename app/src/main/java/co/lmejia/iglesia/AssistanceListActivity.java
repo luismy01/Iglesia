@@ -19,7 +19,7 @@ public class AssistanceListActivity extends ActionBarActivity
 
     private RecyclerView mRecyclerView;
     private ArrayList<Assistance> assistances;
-    private MyAdapterMonthly mAdapter;
+    private MyAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AssistanceHelper helper;
 
@@ -34,7 +34,7 @@ public class AssistanceListActivity extends ActionBarActivity
         helper = new AssistanceHelper(getApplicationContext());
 
         assistances = new ArrayList<Assistance>();
-        mAdapter = new MyAdapterMonthly(assistances);
+        mAdapter = new MyAdapter(assistances);
 
         mLayoutManager = new LinearLayoutManager(this);
 
@@ -112,7 +112,7 @@ public class AssistanceListActivity extends ActionBarActivity
         if (id != 0) {
             assistance.setId(id);
             assistances.add(assistance);
-            mAdapter.notifyItemInserted(assistances.size()-1);
+            mAdapter.notifyItemInserted(assistances.size());
             return true;
         }
 

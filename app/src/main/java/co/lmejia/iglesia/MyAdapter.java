@@ -4,67 +4,71 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
- * Created by luis on 1/31/15.
+ * Created by luis on 2/14/15.
  */
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CardViewHolder> {
 
-    private ArrayList<Assistance> assistances;
+    private List<Assistance> assistances;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class CardViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewHermanos;
-        public TextView textViewVisitas;
-        public ImageView imageViewIcon;
+        public TextView txtAssistance;
+        public TextView txtMonth;
+        public TextView txtDayYear;
 
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            this.textViewHermanos = (TextView) itemView.findViewById(R.id.textViewHermanos);
-            this.textViewVisitas = (TextView) itemView.findViewById(R.id.textViewVisitas);
-            this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageView);
+        public CardViewHolder(View xmlLayout) {
+            super(xmlLayout);
+
+            this.txtAssistance = (TextView) xmlLayout.findViewById(R.id.txtAssistance);
+            this.txtMonth = (TextView) xmlLayout.findViewById(R.id.txtMonth);
+            this.txtDayYear = (TextView) xmlLayout.findViewById(R.id.txtDayYear);
         }
     }
 
 
-    public MyAdapter(ArrayList<Assistance> dataset) {
+    public MyAdapter(List<Assistance> dataset) {
         this.assistances = dataset;
     }
 
+    public void setAssistances(List<Assistance> assistances) {
+        this.assistances = assistances;
+    }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public MyAdapter.CardViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cardview_layout, parent, false);
+        View xmlLayout = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.my_cardview_layout, parent, false);
 
-        //view.setOnClickListener(MainActivity.myOnClickListener);
-
-        MyViewHolder myViewHolder = new MyViewHolder(view);
-        return myViewHolder;
+        return new CardViewHolder(xmlLayout);
 
     }
 
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-
-        TextView textViewHermanos = holder.textViewHermanos;
-        TextView textViewVisitas = holder.textViewVisitas;
-        ImageView imageView = holder.imageViewIcon;
+    public void onBindViewHolder(CardViewHolder holder, int position) {
 
         Assistance assistance = assistances.get(position);
 
-        textViewHermanos.setText( String.valueOf(assistance.getHermanos()) );
-        textViewVisitas.setText( String.valueOf(assistance.getVisitas()) );
-        imageView.setImageResource( R.drawable.support_one );
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(assistance.getFecha());
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        holder.txtAssistance.setText( String.valueOf(assistance.getTotal()) );
+        holder.txtMonth.setText(MyData.getMonthName(month));
+        holder.txtDayYear.setText("" + day + ", " + year);
 
     }
 

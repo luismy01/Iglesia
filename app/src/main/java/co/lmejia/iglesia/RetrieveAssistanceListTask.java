@@ -2,7 +2,6 @@ package co.lmejia.iglesia;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -13,9 +12,9 @@ import java.util.List;
 public class RetrieveAssistanceListTask extends AsyncTask<Void, Void, List<Assistance>> {
 
     private Context context;
-    private MyAdapterMonthly mAdapter;
+    private MyAdapter mAdapter;
 
-    public RetrieveAssistanceListTask(Context context, MyAdapterMonthly mAdapter) {
+    public RetrieveAssistanceListTask(Context context, MyAdapter mAdapter) {
         this.context = context;
         this.mAdapter = mAdapter;
     }
