@@ -1,26 +1,38 @@
 package co.lmejia.iglesia;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import co.lmejia.iglesia.utils.DividerItemDecoration;
+
 
 public class AssistanceListActivity extends ActionBarActivity
-        implements AssistanceDialogFragment.AssistanceDialogListener {
+    implements AssistanceDialogFragment.AssistanceDialogListener
+        , View.OnClickListener
+        , RecyclerView.OnItemTouchListener {
 
 
     private RecyclerView mRecyclerView;
     private ArrayList<Assistance> assistances;
     private MyAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    GestureDetectorCompat gestureDetector;
+
     private AssistanceHelper helper;
 
     private AssistanceDialogFragment assistanceDialog;
@@ -43,6 +55,19 @@ public class AssistanceListActivity extends ActionBarActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+        RecyclerView.ItemDecoration itemDecoration =
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
+
+        mRecyclerView.addItemDecoration(itemDecoration);
+
+        // onClickDetection is done in this Activity's onItemTouchListener
+        // with the help of a GestureDetector;
+        // Tip by Ian Lake on G+ in a comment to this post:
+        // https://plus.google.com/+LucasRocha/posts/37U8GWtYxDE
+        mRecyclerView.addOnItemTouchListener(this);
+        gestureDetector = new GestureDetectorCompat(this, new RecyclerViewDemoOnGestureListener());
 
         assistanceDialog = new AssistanceDialogFragment();
         assistanceDialog.setListener(this);
@@ -111,13 +136,70 @@ public class AssistanceListActivity extends ActionBarActivity
 
         if (id != 0) {
             assistance.setId(id);
-            assistances.add(assistance);
-            mAdapter.notifyItemInserted(assistances.size());
+
+            int position = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            position++;
+
+            mAdapter.addItem(assistance, position);
             return true;
         }
 
         return false;
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        gestureDetector.onTouchEvent(e);
+        return false;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        int position = mRecyclerView.getChildPosition(view);
+        Toast.makeText(this, "clicked at " + position, Toast.LENGTH_SHORT).show();
+/*
+        // item click
+        int position = mRecyclerView.getChildPosition(view);
+        /*if (actionMode != null) {
+            myToggleSelection(idx);
+            return;
+        }
+        DemoModel data = mAdapter.getItem()
+        View innerContainer = view.findViewById(R.id.container_inner_item);
+        innerContainer.setTransitionName(Constants.NAME_INNER_CONTAINER + "_" + data.id);
+        Intent startIntent = new Intent(this, CardViewDemoActivity.class);
+        startIntent.putExtra(Constants.KEY_ID, data.id);
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation(this, innerContainer, Constants.NAME_INNER_CONTAINER);
+        this.startActivity(startIntent, options.toBundle());
+
+*/
+    }
+
+    private class RecyclerViewDemoOnGestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
+            onClick(view);
+            return super.onSingleTapConfirmed(e);
+        }
+
+        public void onLongPress(MotionEvent e) {
+            View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
+            /*if (actionMode != null) {
+                return;
+            }*/
+            // Start the CAB using the ActionMode.Callback defined above
+            //actionMode = startActionMode(RecyclerViewDemoActivity.this);
+            int idx = mRecyclerView.getChildPosition(view);
+            //myToggleSelection(idx);
+            super.onLongPress(e);
+        }
+    }
 
 }

@@ -152,6 +152,8 @@ public class AssistanceHelper extends SQLiteOpenHelper {
 
         if (!cursor.moveToFirst()) return null;
 
+        int i = 0;
+
         do {
 
             long f = cursor.getLong(0);
@@ -167,7 +169,8 @@ public class AssistanceHelper extends SQLiteOpenHelper {
             assistance.setAdolescentes(a);
             assistance.setNinos(n);
 
-            assistances.add(assistance);
+            assistances.add(i, assistance);
+            i++;
 
         } while (cursor.moveToNext());
 

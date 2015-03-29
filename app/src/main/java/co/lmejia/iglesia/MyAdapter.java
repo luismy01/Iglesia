@@ -16,28 +16,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CardViewHolder> {
 
     private List<Assistance> assistances;
 
-    public static class CardViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView txtAssistance;
-        public TextView txtMonth;
-        public TextView txtDayYear;
-
-        public CardViewHolder(View xmlLayout) {
-            super(xmlLayout);
-
-            this.txtAssistance = (TextView) xmlLayout.findViewById(R.id.txtAssistance);
-            this.txtMonth = (TextView) xmlLayout.findViewById(R.id.txtMonth);
-            this.txtDayYear = (TextView) xmlLayout.findViewById(R.id.txtDayYear);
-        }
-    }
-
-
     public MyAdapter(List<Assistance> dataset) {
-        this.assistances = dataset;
+        assistances = dataset;
     }
 
     public void setAssistances(List<Assistance> assistances) {
         this.assistances = assistances;
+        notifyDataSetChanged();
+    }
+
+    public void addItem(Assistance item, int position) {
+        assistances.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public void removeItem(int position) {
+        assistances.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public Assistance getItem(int position) {
+        return assistances.get(position);
     }
 
     // Create new views (invoked by the layout manager)
@@ -78,4 +77,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CardViewHolder> {
         return assistances.size();
     }
 
+    public static class CardViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView txtAssistance;
+        public TextView txtMonth;
+        public TextView txtDayYear;
+
+        public CardViewHolder(View xmlLayout) {
+            super(xmlLayout);
+
+            this.txtAssistance = (TextView) xmlLayout.findViewById(R.id.txtAssistance);
+            this.txtMonth = (TextView) xmlLayout.findViewById(R.id.txtMonth);
+            this.txtDayYear = (TextView) xmlLayout.findViewById(R.id.txtDayYear);
+        }
+    }
 }
