@@ -1,11 +1,9 @@
 package co.lmejia.iglesia;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -14,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -55,7 +52,7 @@ public class AssistanceDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = this.getActivity().getLayoutInflater();
-        final View xmlLayout = inflater.inflate(R.layout.activity_asistencia_item, null);
+        final View xmlLayout = inflater.inflate(R.layout.activity_assistance, null);
 
         btnAssistanceDate = (Button) xmlLayout.findViewById(R.id.btn_date_asistencia);
         btnAssistanceDate.setOnClickListener(new Button.OnClickListener() {

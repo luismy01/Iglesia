@@ -35,6 +35,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CardViewHolder> {
         notifyItemRemoved(position);
     }
 
+    public void clear() {
+        assistances.clear();
+        notifyDataSetChanged();
+    }
+
     public Assistance getItem(int position) {
         return assistances.get(position);
     }

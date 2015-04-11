@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,8 +25,11 @@ import co.lmejia.iglesia.utils.DividerItemDecoration;
 public class AssistanceListActivity extends ActionBarActivity
     implements AssistanceDialogFragment.AssistanceDialogListener
         , View.OnClickListener
+        , View.OnLongClickListener
         , RecyclerView.OnItemTouchListener {
 
+    public static final String TAG = AssistanceListActivity.class.getSimpleName();
+    private static final int ASSISTANCE_REQUEST_CODE = 1;
 
     private RecyclerView mRecyclerView;
     private ArrayList<Assistance> assistances;
@@ -41,6 +45,8 @@ public class AssistanceListActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
+
         setContentView(R.layout.activity_main);
 
         helper = new AssistanceHelper(getApplicationContext());
@@ -77,10 +83,11 @@ public class AssistanceListActivity extends ActionBarActivity
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart");
 
-        if (mAdapter.getItemCount() == 0) {
+        //if (mAdapter.getItemCount() == 0) {
             populateList();
-        }
+        //}
 
     }
 
@@ -113,21 +120,43 @@ public class AssistanceListActivity extends ActionBarActivity
     }
 
     @Override
-    public void onDialogPositiveClick(AssistanceDialogFragment dialog) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        Assistance assistance_new;
+
+        if (requestCode == ASSISTANCE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                // I get the new assistance object
+                assistance_new = (Assistance) data.getSerializableExtra(Assistance.TAG);
+            }
+        }
+    }
+
+    @Override
+    public void onDialogPositiveClick(AssistanceDialogFragment dialog) {
+/* @deprecated
         if (saveAssistance(dialog.getAssistance())) {
             Toast.makeText(this, "Elemento insertado", Toast.LENGTH_SHORT).show();
         }
-
+*/
     }
 
     @Override
     public void onDialogNegativeClick(AssistanceDialogFragment dialog) {
+        /* @deprecated */
     }
 
     public void ShowAssistanceDialog() {
+
+        /*
         assistanceDialog.reset();
         assistanceDialog.show(this.getSupportFragmentManager(), "Asistencia");
+        */
+
+        Intent startIntent = new Intent(this, AssistanceActivity.class);
+        startActivityForResult(startIntent, ASSISTANCE_REQUEST_CODE);
+
     }
 
     private boolean saveAssistance(Assistance assistance) {
@@ -181,15 +210,28 @@ public class AssistanceListActivity extends ActionBarActivity
 */
     }
 
+    @Override
+    public boolean onLongClick(View view) {
+
+        int position = mRecyclerView.getChildPosition(view);
+        Toast.makeText(this, "long click at " + position, Toast.LENGTH_SHORT).show();
+
+        return false;
+    }
+
     private class RecyclerViewDemoOnGestureListener extends GestureDetector.SimpleOnGestureListener {
+
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
+
             View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
             onClick(view);
+
             return super.onSingleTapConfirmed(e);
         }
 
         public void onLongPress(MotionEvent e) {
+
             View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
             /*if (actionMode != null) {
                 return;
@@ -197,7 +239,8 @@ public class AssistanceListActivity extends ActionBarActivity
             // Start the CAB using the ActionMode.Callback defined above
             //actionMode = startActionMode(RecyclerViewDemoActivity.this);
             int idx = mRecyclerView.getChildPosition(view);
-            //myToggleSelection(idx);
+            onLongClick(view);
+
             super.onLongPress(e);
         }
     }

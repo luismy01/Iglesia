@@ -1,11 +1,15 @@
 package co.lmejia.iglesia;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by luis on 2/2/15.
  */
-public class Assistance {
+public class Assistance
+        implements Serializable {
+
+    public static final String TAG = Assistance.class.getSimpleName();
 
     private long id;
     private Date fecha;

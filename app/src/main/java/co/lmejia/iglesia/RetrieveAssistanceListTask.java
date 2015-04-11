@@ -21,13 +21,13 @@ public class RetrieveAssistanceListTask extends AsyncTask<Void, Void, List<Assis
 
     @Override
     protected void onPreExecute() {
-        Toast.makeText(this.context, R.string.txt_loading, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.txt_loading, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected List<Assistance> doInBackground(Void... params) {
 
-        AssistanceHelper helper = new AssistanceHelper(this.context);
+        AssistanceHelper helper = new AssistanceHelper(context);
         return helper.allAssistances();
 
     }
@@ -35,10 +35,14 @@ public class RetrieveAssistanceListTask extends AsyncTask<Void, Void, List<Assis
     @Override
     protected void onPostExecute(List<Assistance> assistances) {
 
-        this.mAdapter.setAssistances(assistances);
-        this.mAdapter.notifyItemRangeInserted(0, assistances.size()-1);
+        //mAdapter.setAssistances(assistances);
+        mAdapter.clear();
 
-        Toast.makeText(this.context, "Carga finalizada", Toast.LENGTH_SHORT).show();
+        for (int i = 0, size = assistances.size(); i < size; i++) {
+            mAdapter.addItem(assistances.get(i), i);
+        }
+
+        Toast.makeText(context, "Carga finalizada", Toast.LENGTH_SHORT).show();
 
     }
 }
