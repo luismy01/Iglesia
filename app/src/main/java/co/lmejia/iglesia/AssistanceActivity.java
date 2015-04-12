@@ -6,15 +6,18 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.List;
 
 
 public class AssistanceActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
@@ -22,6 +25,7 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
     private final String TAG = AssistanceActivity.class.getSimpleName();
 
     private Assistance assistance;
+    private Button viewBtnDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +34,20 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
 
         setContentView(R.layout.activity_assistance);
 
-        View view = findViewById(R.id.btn_date_asistencia);
-        view.setOnClickListener(new View.OnClickListener() {
+        assistance = new Assistance();
+
+        viewBtnDate = (Button) findViewById(R.id.btn_date_asistencia);
+        viewBtnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
             }
         });
 
-        assistance = new Assistance();
+        CharSequence date_format = DateFormat.format("yyyy/MM/dd", assistance.getFecha());
+        String title = getResources().getString(R.string.assistance_when_date) + " - " + date_format;
+        viewBtnDate.setText(title);
+
     }
 
     @Override
@@ -80,6 +89,7 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
     }
 
     private boolean validar() {
+        Log.d(TAG, "validar");
 
         EditText txt;
 
@@ -116,11 +126,14 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
         int y, m, d;
 
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(assistance.getFecha());
+
         y = calendar.get(Calendar.YEAR);
         m = calendar.get(Calendar.MONTH);
         d = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(this,this, y, m, d);
+        dialog.setTitle(R.string.assistance_when_date);
         dialog.show();
 
     }
@@ -166,6 +179,10 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
         assistance.setFecha(calendar.getTime());
+
+        CharSequence date_format = DateFormat.format("yyyy/MM/dd", assistance.getFecha());
+        String title = getResources().getString(R.string.assistance_when_date) + " - " + date_format;
+        viewBtnDate.setText(title);
 
     }
 }

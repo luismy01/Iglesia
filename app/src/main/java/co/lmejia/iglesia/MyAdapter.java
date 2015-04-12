@@ -30,6 +30,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CardViewHolder> {
         notifyItemInserted(position);
     }
 
+    public void updateItem(Assistance item, int position) {
+        assistances.set(position, item);
+        notifyItemChanged(position);
+    }
+
     public void removeItem(int position) {
         assistances.remove(position);
         notifyItemRemoved(position);

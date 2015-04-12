@@ -23,8 +23,7 @@ import co.lmejia.iglesia.utils.DividerItemDecoration;
 
 
 public class AssistanceListActivity extends ActionBarActivity
-    implements AssistanceDialogFragment.AssistanceDialogListener
-        , View.OnClickListener
+    implements View.OnClickListener
         , View.OnLongClickListener
         , RecyclerView.OnItemTouchListener {
 
@@ -38,9 +37,6 @@ public class AssistanceListActivity extends ActionBarActivity
     GestureDetectorCompat gestureDetector;
 
     private AssistanceHelper helper;
-
-    private AssistanceDialogFragment assistanceDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +63,8 @@ public class AssistanceListActivity extends ActionBarActivity
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
 
         mRecyclerView.addItemDecoration(itemDecoration);
-
-        // onClickDetection is done in this Activity's onItemTouchListener
-        // with the help of a GestureDetector;
-        // Tip by Ian Lake on G+ in a comment to this post:
-        // https://plus.google.com/+LucasRocha/posts/37U8GWtYxDE
         mRecyclerView.addOnItemTouchListener(this);
         gestureDetector = new GestureDetectorCompat(this, new RecyclerViewDemoOnGestureListener());
-
-        assistanceDialog = new AssistanceDialogFragment();
-        assistanceDialog.setListener(this);
 
     }
 
@@ -85,13 +73,14 @@ public class AssistanceListActivity extends ActionBarActivity
         super.onStart();
         Log.d(TAG, "onStart");
 
-        //if (mAdapter.getItemCount() == 0) {
+        if (mAdapter.getItemCount() == 0) {
             populateList();
-        //}
+        }
 
     }
 
     private void populateList() {
+        Log.d(TAG, "populateList");
         new RetrieveAssistanceListTask(this, mAdapter).execute();
     }
 
@@ -109,7 +98,7 @@ public class AssistanceListActivity extends ActionBarActivity
         switch (item.getItemId()) {
 
             case R.id.action_new:
-                ShowAssistanceDialog();
+                ShowAssistanceDialog(null);
                 return true;
 
             default:
@@ -129,51 +118,18 @@ public class AssistanceListActivity extends ActionBarActivity
 
                 // I get the new assistance object
                 assistance_new = (Assistance) data.getSerializableExtra(Assistance.TAG);
+                mAdapter.addItem(assistance_new, 0);
             }
         }
     }
 
-    @Override
-    public void onDialogPositiveClick(AssistanceDialogFragment dialog) {
-/* @deprecated
-        if (saveAssistance(dialog.getAssistance())) {
-            Toast.makeText(this, "Elemento insertado", Toast.LENGTH_SHORT).show();
-        }
-*/
-    }
-
-    @Override
-    public void onDialogNegativeClick(AssistanceDialogFragment dialog) {
-        /* @deprecated */
-    }
-
-    public void ShowAssistanceDialog() {
-
-        /*
-        assistanceDialog.reset();
-        assistanceDialog.show(this.getSupportFragmentManager(), "Asistencia");
-        */
+    public void ShowAssistanceDialog(Assistance assistance) {
 
         Intent startIntent = new Intent(this, AssistanceActivity.class);
+        startIntent.putExtra(Assistance.TAG, assistance);
+
         startActivityForResult(startIntent, ASSISTANCE_REQUEST_CODE);
 
-    }
-
-    private boolean saveAssistance(Assistance assistance) {
-
-        long id = helper.save(assistance);
-
-        if (id != 0) {
-            assistance.setId(id);
-
-            int position = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
-            position++;
-
-            mAdapter.addItem(assistance, position);
-            return true;
-        }
-
-        return false;
     }
 
     @Override
@@ -183,14 +139,14 @@ public class AssistanceListActivity extends ActionBarActivity
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-    }
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
 
     @Override
     public void onClick(View view) {
 
         int position = mRecyclerView.getChildPosition(view);
         Toast.makeText(this, "clicked at " + position, Toast.LENGTH_SHORT).show();
+
 /*
         // item click
         int position = mRecyclerView.getChildPosition(view);
@@ -214,7 +170,10 @@ public class AssistanceListActivity extends ActionBarActivity
     public boolean onLongClick(View view) {
 
         int position = mRecyclerView.getChildPosition(view);
-        Toast.makeText(this, "long click at " + position, Toast.LENGTH_SHORT).show();
+        Assistance assistance = mAdapter.getItem(position);
+        ShowAssistanceDialog(assistance);
+
+        //Toast.makeText(this, "long click at " + position, Toast.LENGTH_SHORT).show();
 
         return false;
     }
