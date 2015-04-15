@@ -1,6 +1,13 @@
+/**
+ * Copyright 2015 luismy01 and other contributors
+ * https://github.com/luismy01
+ *
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ */
+
 package co.lmejia.iglesia;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
@@ -20,6 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import co.lmejia.iglesia.utils.DividerItemDecoration;
+import ophilbert.animation.ActivityAnimator;
 
 
 public class AssistanceListActivity extends ActionBarActivity
@@ -34,9 +42,10 @@ public class AssistanceListActivity extends ActionBarActivity
     private ArrayList<Assistance> assistances;
     private MyAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    GestureDetectorCompat gestureDetector;
+    private GestureDetectorCompat gestureDetector;
 
-    private AssistanceHelper helper;
+    private int positionEdit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,7 @@ public class AssistanceListActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
 
-        helper = new AssistanceHelper(getApplicationContext());
+        positionEdit = 0;
 
         assistances = new ArrayList<Assistance>();
         mAdapter = new MyAdapter(assistances);
@@ -79,13 +88,9 @@ public class AssistanceListActivity extends ActionBarActivity
 
     }
 
-    private void populateList() {
-        Log.d(TAG, "populateList");
-        new RetrieveAssistanceListTask(this, mAdapter).execute();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "onCreateOptionsMenu");
 
         MenuInflater inflater = this.getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
@@ -94,6 +99,7 @@ public class AssistanceListActivity extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected");
 
         switch (item.getItemId()) {
 
@@ -110,78 +116,96 @@ public class AssistanceListActivity extends ActionBarActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult");
 
         Assistance assistance_new;
+        String message = "";
 
-        if (requestCode == ASSISTANCE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+        if (requestCode == ASSISTANCE_REQUEST_CODE && data != null) {
 
-                // I get the new assistance object
+            if (data.hasExtra(Assistance.TAG)) {
+
                 assistance_new = (Assistance) data.getSerializableExtra(Assistance.TAG);
-                mAdapter.addItem(assistance_new, 0);
+
+                if (resultCode == AssistanceActivity.RESULT_OK) {
+
+                    mAdapter.addItem(assistance_new, 0);
+                    message = "Se agregó una asistencia";
+
+                } else if (resultCode == AssistanceActivity.RESULT_EDIT) {
+
+                    mAdapter.updateItem(assistance_new, positionEdit);
+                    message = "Se modificó una asistencia";
+
+                }
+
+                Toast t = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+                t.show();
             }
         }
     }
 
-    public void ShowAssistanceDialog(Assistance assistance) {
-
-        Intent startIntent = new Intent(this, AssistanceActivity.class);
-        startIntent.putExtra(Assistance.TAG, assistance);
-
-        startActivityForResult(startIntent, ASSISTANCE_REQUEST_CODE);
-
-    }
-
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        Log.d(TAG, "onInterceptTouchEvent");
+
         gestureDetector.onTouchEvent(e);
         return false;
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        Log.d(TAG, "onTouchEvent");
+    }
 
     @Override
     public void onClick(View view) {
+        Log.d(TAG, "onClick");
 
-        int position = mRecyclerView.getChildPosition(view);
-        Toast.makeText(this, "clicked at " + position, Toast.LENGTH_SHORT).show();
+        positionEdit = mRecyclerView.getChildPosition(view);
+        Assistance assistance = mAdapter.getItem(positionEdit);
+        ShowAssistanceDialog(assistance);
 
-/*
-        // item click
-        int position = mRecyclerView.getChildPosition(view);
-        /*if (actionMode != null) {
-            myToggleSelection(idx);
-            return;
-        }
-        DemoModel data = mAdapter.getItem()
-        View innerContainer = view.findViewById(R.id.container_inner_item);
-        innerContainer.setTransitionName(Constants.NAME_INNER_CONTAINER + "_" + data.id);
-        Intent startIntent = new Intent(this, CardViewDemoActivity.class);
-        startIntent.putExtra(Constants.KEY_ID, data.id);
-        ActivityOptions options = ActivityOptions
-                .makeSceneTransitionAnimation(this, innerContainer, Constants.NAME_INNER_CONTAINER);
-        this.startActivity(startIntent, options.toBundle());
-
-*/
     }
 
     @Override
     public boolean onLongClick(View view) {
+        Log.d(TAG, "onLongClick");
 
         int position = mRecyclerView.getChildPosition(view);
-        Assistance assistance = mAdapter.getItem(position);
-        ShowAssistanceDialog(assistance);
-
-        //Toast.makeText(this, "long click at " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, " long clicked at " + position, Toast.LENGTH_SHORT).show();
 
         return false;
     }
 
+
+    private void populateList() {
+        Log.d(TAG, "populateList");
+        new RetrieveAssistanceListTask(this, mAdapter).execute();
+    }
+
+    public void ShowAssistanceDialog(Assistance assistance) {
+        Log.d(TAG, "ShowAssistanceDialog");
+
+        Intent startIntent = new Intent(this, AssistanceActivity.class);
+        if (assistance != null) {
+            startIntent.putExtra(Assistance.TAG, assistance);
+        }
+
+        startActivityForResult(startIntent, ASSISTANCE_REQUEST_CODE);
+
+        ActivityAnimator animator = ActivityAnimator.getInstance();
+        animator.PullRightPushLeft(this);
+
+    }
+
     private class RecyclerViewDemoOnGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        public final String TAG = RecyclerViewDemoOnGestureListener.class.getSimpleName();
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
+            Log.d(TAG, "onSingleTapConfirmed");
 
             View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
             onClick(view);
@@ -190,14 +214,9 @@ public class AssistanceListActivity extends ActionBarActivity
         }
 
         public void onLongPress(MotionEvent e) {
+            Log.d(TAG, "onLongPress");
 
             View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
-            /*if (actionMode != null) {
-                return;
-            }*/
-            // Start the CAB using the ActionMode.Callback defined above
-            //actionMode = startActionMode(RecyclerViewDemoActivity.this);
-            int idx = mRecyclerView.getChildPosition(view);
             onLongClick(view);
 
             super.onLongPress(e);
