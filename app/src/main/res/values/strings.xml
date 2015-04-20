@@ -6,7 +6,14 @@
     <string name="action_settings">Ajustes</string>
     <string name="action_new">Nuevo</string>
     <string name="action_save">Guardar</string>
+
     <string name="title_activity_asistencia_item">Nueva Asistencia</string>
+    <string name="title_delete_assistance">¿Quieres eliminar este registro?</string>
+
+    <string name="toast_delete_assistance">Asistencia eliminada</string>
+
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancelar</string>
 
     <string name="dialog_save">Guardar</string>
     <string name="dialog_cancel">Cancelar</string>

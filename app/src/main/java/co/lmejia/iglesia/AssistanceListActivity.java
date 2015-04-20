@@ -8,8 +8,12 @@
 
 package co.lmejia.iglesia;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -104,7 +108,7 @@ public class AssistanceListActivity extends ActionBarActivity
         switch (item.getItemId()) {
 
             case R.id.action_new:
-                ShowAssistanceDialog(null);
+                ShowAssistanceActivity(null);
                 return true;
 
             default:
@@ -164,7 +168,7 @@ public class AssistanceListActivity extends ActionBarActivity
 
         positionEdit = mRecyclerView.getChildPosition(view);
         Assistance assistance = mAdapter.getItem(positionEdit);
-        ShowAssistanceDialog(assistance);
+        ShowAssistanceActivity(assistance);
 
     }
 
@@ -173,7 +177,9 @@ public class AssistanceListActivity extends ActionBarActivity
         Log.d(TAG, "onLongClick");
 
         int position = mRecyclerView.getChildPosition(view);
-        Toast.makeText(this, " long clicked at " + position, Toast.LENGTH_SHORT).show();
+        mAdapter.setSelectedItem(position);
+
+        ShowDeleteAssistanceDialog();
 
         return false;
     }
@@ -184,8 +190,8 @@ public class AssistanceListActivity extends ActionBarActivity
         new RetrieveAssistanceListTask(this, mAdapter).execute();
     }
 
-    public void ShowAssistanceDialog(Assistance assistance) {
-        Log.d(TAG, "ShowAssistanceDialog");
+    public void ShowAssistanceActivity(Assistance assistance) {
+        Log.d(TAG, "ShowAssistanceActivity");
 
         Intent startIntent = new Intent(this, AssistanceActivity.class);
         if (assistance != null) {
@@ -196,6 +202,17 @@ public class AssistanceListActivity extends ActionBarActivity
 
         ActivityAnimator animator = ActivityAnimator.getInstance();
         animator.PullRightPushLeft(this);
+
+    }
+
+    public void ShowDeleteAssistanceDialog() {
+        Log.d(TAG, "ShowDeleteAssistanceDialog");
+
+        DeleteAssistanceDialogFragment dialog = new DeleteAssistanceDialogFragment();
+
+        dialog.setContext(this);
+        dialog.setAdapter(mAdapter);
+        dialog.show(getSupportFragmentManager(), dialog.TAG);
 
     }
 

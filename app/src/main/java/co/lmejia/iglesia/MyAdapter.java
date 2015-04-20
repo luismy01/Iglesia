@@ -15,9 +15,11 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CardViewHolder> {
 
     private List<Assistance> assistances;
+    private int selectedItem;
 
     public MyAdapter(List<Assistance> dataset) {
         assistances = dataset;
+        selectedItem = -1;
     }
 
     public void setAssistances(List<Assistance> assistances) {
@@ -85,6 +87,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CardViewHolder> {
     @Override
     public int getItemCount() {
         return assistances.size();
+    }
+
+    public void setSelectedItem(int selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
+    public int getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void removeSelectedItem() {
+        selectedItem = -1;
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
