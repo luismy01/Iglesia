@@ -10,7 +10,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/assistance_when_date"
+        android:text="@string/hint_when_date"
         android:id="@+id/btn_date_asistencia"
         android:layout_weight="0.06"
         android:drawableLeft="@android:drawable/ic_menu_my_calendar"
@@ -25,7 +25,7 @@
         android:ems="10"
         android:id="@+id/num_hermanos"
         android:layout_weight="0.06"
-        android:hint="@string/assistance_how_many_brothers" />
+        android:hint="@string/hint_how_many_brothers" />
 
     <EditText
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:id="@+id/num_visitas"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.06"
-        android:hint="@string/assistance_how_many_visits" />
+        android:hint="@string/hint_how_many_visits" />
 
     <EditText
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
         android:ems="10"
         android:id="@+id/num_adolescentes"
         android:layout_weight="0.06"
-        android:hint="@string/assistance_how_many_teenagers" />
+        android:hint="@string/hint_how_many_teenagers" />
 
     <EditText
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
         android:id="@+id/num_ninos"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.06"
-        android:hint="@string/assistance_how_many_kids" />
+        android:hint="@string/hint_how_many_kids" />
 
     <TextView
         android:layout_width="match_parent"

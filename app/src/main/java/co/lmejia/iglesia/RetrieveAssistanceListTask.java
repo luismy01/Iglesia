@@ -21,7 +21,7 @@ public class RetrieveAssistanceListTask extends AsyncTask<Void, Void, List<Assis
 
     @Override
     protected void onPreExecute() {
-        Toast.makeText(context, R.string.txt_loading, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.loading, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -33,7 +33,7 @@ public class DeleteAssistanceDialogFragment extends DialogFragment {
 
                 if (helper.deleteAssistance(assistance)) {
                     adapter.removeItem(adapter.getSelectedItem());
-                    Toast.makeText(context, R.string.toast_delete_assistance, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.toast_assistance_deleted, Toast.LENGTH_SHORT).show();
                 }
 
             }

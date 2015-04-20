@@ -3,30 +3,27 @@
 
     <string name="app_name">Iglesia</string>
     <string name="hello_world">Hola mundo!</string>
-    <string name="action_settings">Ajustes</string>
-    <string name="action_new">Nuevo</string>
-    <string name="action_save">Guardar</string>
 
-    <string name="title_activity_asistencia_item">Nueva Asistencia</string>
+    <string name="add">Agregar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="loading">Cargando...</string>
+    <string name="ok">Ok</string>
+    <string name="save">Guardar</string>
+    <string name="settings">Ajustes</string>
+
+    <string name="hint_when_date">¿Cuando fué?</string>
+    <string name="hint_how_many_brothers">¿Cuantos hermanos?</string>
+    <string name="hint_how_many_visits">¿Cuantas vistas?</string>
+    <string name="hint_how_many_teenagers">¿Cuantos adolescentes?</string>
+    <string name="hint_how_many_kids">¿Cuantos niños?</string>
+
+    <string name="title_assistance_activity">Nueva Asistencia</string>
     <string name="title_delete_assistance">¿Quieres eliminar este registro?</string>
 
-    <string name="toast_delete_assistance">Asistencia eliminada</string>
-
-    <string name="ok">Ok</string>
-    <string name="cancel">Cancelar</string>
-
-    <string name="dialog_save">Guardar</string>
-    <string name="dialog_cancel">Cancelar</string>
+    <string name="toast_assistance_deleted">Asistencia eliminada</string>
 
     <string name="txt_total">555</string>
     <string name="txt_month">Enero</string>
     <string name="txt_day">23, 2015</string>
-    <string name="txt_loading">Cargando...</string>
-
-    <string name="assistance_when_date">¿Cuando fué?</string>
-    <string name="assistance_how_many_brothers">¿Cuantos hermanos?</string>
-    <string name="assistance_how_many_visits">¿Cuantas vistas?</string>
-    <string name="assistance_how_many_teenagers">¿Cuantos adolescentes?</string>
-    <string name="assistance_how_many_kids">¿Cuantos niños?</string>
 
 </resources>

@@ -63,7 +63,7 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
         receiveAssistance();
 
         CharSequence date_format = DateFormat.format("yyyy/MM/dd", assistance.getFecha());
-        String title = getResources().getString(R.string.assistance_when_date) + " - " + date_format;
+        String title = getResources().getString(R.string.hint_when_date) + " - " + date_format;
         viewBtnDate.setText(title);
 
     }
@@ -131,7 +131,7 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
         assistance.setFecha(calendar.getTime());
 
         CharSequence date_format = DateFormat.format("yyyy/MM/dd", assistance.getFecha());
-        String title = getResources().getString(R.string.assistance_when_date) + " - " + date_format;
+        String title = getResources().getString(R.string.hint_when_date) + " - " + date_format;
         viewBtnDate.setText(title);
 
     }
@@ -175,7 +175,7 @@ public class AssistanceActivity extends ActionBarActivity implements DatePickerD
         d = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(this,this, y, m, d);
-        dialog.setTitle(R.string.assistance_when_date);
+        dialog.setTitle(R.string.hint_when_date);
         dialog.show();
 
     }
